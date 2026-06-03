@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Automatic Winner</title>
+    <title>Forums — The Automatic Winner</title>
     <style>
         body {
             margin: 0;
@@ -43,12 +43,24 @@
 <body>
     <nav class="navbar">
         <span class="navbar-brand">Automatic Winner</span>
-        <a href="/" aria-current="page">Home</a>
-        <a href="/forums/">Forums</a>
+        <a href="/">Home</a>
+        <a href="/forums/" aria-current="page">Forums</a>
     </nav>
     <main>
-        <h1>Home</h1>
-        <p>Placeholder text for the homepage.</p>
+        <h1>Forums</h1>
+        <p>Placeholder text for the forums page.</p>
+
+        <div id="disqus-boards-host"></div>
+        <script>
+            (function() {
+                if (document.getElementById('disqus_boards_script')) return;
+                var d = document, s = d.createElement('script');
+                s.id = 'disqus_boards_script';
+                s.src = 'https://boards-ctang.disqus.com/boards.js';
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view this widget powered by Disqus.</noscript>
     </main>
 </body>
 </html>
