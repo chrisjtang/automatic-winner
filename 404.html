@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found — The Automatic Winner</title>
+    <script>
+        // SPA fallback for the /forums/ section. The Disqus Boards widget
+        // runs in history mode and owns URLs under /automatic-winner/forums/*.
+        // GitHub Pages can't serve forums/index.html for those deep paths
+        // directly, so it lands here; we encode the path into a query
+        // string and bounce back to /automatic-winner/forums/, where an
+        // unwrap script restores the URL before the snippet boots.
+        //
+        // Adapted from https://github.com/rafgraph/spa-github-pages.
+        (function () {
+            var l = window.location;
+            var FORUMS_PREFIX = '/automatic-winner/forums/';
+            if (l.pathname.slice(0, FORUMS_PREFIX.length) !== FORUMS_PREFIX) {
+                return; // unrelated 404, show the static body below
+            }
+
+            // Keep the first two path segments (`/automatic-winner/forums`)
+            // and encode whatever comes after into `?/<rest>`.
+            var segmentsToKeep = 2;
+            var parts = l.pathname.split('/');
+            var kept = parts.slice(0, 1 + segmentsToKeep).join('/');
+            var rest = parts
+                .slice(1 + segmentsToKeep)
+                .join('/')
+                .replace(/&/g, '~and~');
+
+            l.replace(
+                l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+                kept + '/?/' + rest +
+                (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+                l.hash
+            );
+        })();
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1a1a1a;
+            padding: 48px 24px;
+            text-align: center;
+        }
+        a {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Page not found</h1>
+    <p><a href="/automatic-winner/">Back to home</a></p>
+</body>
+</html>

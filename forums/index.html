@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forums — The Automatic Winner</title>
+    <script>
+        // Restore deep paths handed off by /404.html before any other
+        // script runs. If the URL looks like /automatic-winner/forums/?/<rest>,
+        // rewrite the address bar to /automatic-winner/forums/<rest> so the
+        // boards history router sees the canonical URL on first paint.
+        //
+        // Adapted from https://github.com/rafgraph/spa-github-pages.
+        (function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search
+                    .slice(1)
+                    .split('&')
+                    .map(function (s) { return s.replace(/~and~/g, '&'); })
+                    .join('?');
+                window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
+            }
+        })(window.location);
+    </script>
     <style>
         body {
             margin: 0;
@@ -42,11 +60,20 @@
 <body>
     <nav class="navbar">
         <span class="navbar-brand">Automatic Winner</span>
-        <a href="../">Home</a>
-        <a href="./" aria-current="page">Forums</a>
+        <a href="/automatic-winner/">Home</a>
+        <a href="/automatic-winner/forums/" aria-current="page">Forums</a>
     </nav>
     <main>
         <div id="disqus-boards-host"></div>
+        <script>
+            // Opt into history routing. basePath must include the project
+            // subdirectory because window.location.pathname does too on
+            // GitHub Pages project sites.
+            window.disqus_boards_config = function () {
+                this.routerMode = 'history';
+                this.basePath = '/automatic-winner/forums';
+            };
+        </script>
         <script>
             (function() {
                 if (document.getElementById('disqus_boards_script')) return;
